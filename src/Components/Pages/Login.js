@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { View, TextInput, Text, ImageBackground, TouchableOpacity } from "react-native";
+import {
+  View,
+  TextInput,
+  Text,
+  ImageBackground,
+  TouchableOpacity,
+} from "react-native";
 import { auth } from "../../firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import styles from "./styles";
@@ -13,18 +19,34 @@ const Login = ({ navigation }) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       alert("Inicio de sesión exitoso");
-      navigation.navigate("Home");
+      navigation.navigate("Residente");
     } catch (error) {
       alert(error.message);
     }
   };
 
   return (
-    <ImageBackground source={require("../../assets/background.jpg")} style={styles.background}>
+    <ImageBackground
+      source={require("../../assets/background.jpg")}
+      style={styles.background}
+    >
       <View style={styles.overlay}>
         <Text style={styles.title}>SIGN IN</Text>
-        <TextInput placeholder="Email" value={email} onChangeText={setEmail} style={styles.input} placeholderTextColor="white" />
-        <TextInput placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry style={styles.input} placeholderTextColor="white" />
+        <TextInput
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+          style={styles.input}
+          placeholderTextColor="white"
+        />
+        <TextInput
+          placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+          style={styles.input}
+          placeholderTextColor="white"
+        />
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
