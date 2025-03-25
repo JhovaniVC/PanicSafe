@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 
-const NavBar = () => {
+const NavBarPanico = () => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.tab}>
@@ -61,4 +61,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NavBar;
+export default NavBarPanico;

@@ -10,8 +10,10 @@ import {
 import Icon from "react-native-vector-icons/FontAwesome";
 import NavBar from "./NavBar";
 import HeaderHome from "./HeaderHome";
+import { useNavigation } from "@react-navigation/native";
 
 export default function HomePageResidente() {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <StatusBar style="light" backgroundColor="#3396FE" translucent={true} />
@@ -25,6 +27,7 @@ export default function HomePageResidente() {
           <View style={styles.centeredContainer}>
             {/* Botón SOS con icono de exclamación */}
             <Pressable
+              onPress={() => navigation.navigate("Panico")} // ¡Navega a la pantalla!
               style={({ pressed }) => [
                 styles.sosButton,
                 { transform: [{ scale: pressed ? 0.98 : 1 }] },
@@ -43,7 +46,10 @@ export default function HomePageResidente() {
 
             {/* Botones de opciones */}
             <View style={styles.optionsContainer}>
-              <TouchableOpacity style={styles.largeButton}>
+              <TouchableOpacity
+                style={styles.largeButton}
+                onPress={() => navigation.navigate("Cuotas")}
+              >
                 <Icon
                   name="money"
                   size={26}
@@ -53,7 +59,10 @@ export default function HomePageResidente() {
                 <Text style={styles.buttonText}>CUOTAS Y SERVICIOS</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.largeButton}>
+              <TouchableOpacity
+                style={styles.largeButton}
+                onPress={() => navigation.navigate("Reportes")}
+              >
                 <Icon
                   name="exclamation-triangle"
                   size={26}

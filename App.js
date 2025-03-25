@@ -1,18 +1,11 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import HomePageResidente from './components/HomeResidente/HomePageResidente';
+import "react-native-gesture-handler"; // Debe ser la primera línea
+import { NavigationContainer } from "@react-navigation/native";
+import AppNavigator from "./components/routes/AppNavigator";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <HomePageResidente />
-    </View>
+    <NavigationContainer>
+      <AppNavigator />
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f5f5f5',
-  },
-});
