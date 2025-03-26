@@ -1,59 +1,111 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import BotonBitacora from './Componentes/BotonBitacora';
-import BitacoraPersonal from './Componentes/BitacoraPersonal';
-import BitacoraEntregas from './Componentes/BitacoraEntregas';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Login from "./src/Components/Pages/Login";
+import Register from "./src/Components/Pages/Register";
+import Home from "./src/Components/Pages/Home";
+import HomePageResidente from "./src/Components/Pages/HomeResidente/HomePageResidente";
+import BtnPanico from "./src/Components/Pages/panico/BtnPanico";
+import BtnCuotas from "./src/Components/Pages/cuotas/BtnCuotas";
+import DetallesCuotas from "./src/Components/Pages/cuotas/DetallesCuotas";
+import PantallaPago from "./src/Components/Pages/cuotas/PantallaPago";
+import BtnReportes from "./src/Components/Pages/Reportes/BtnReportes";
+import UserScreen from "./src/Components/Pages/HomeResidente/UserScreen";
 
-const Stack = createNativeStackNavigator();
+// 1️⃣ Crear los navegadores (MainStack para Login/Register/Home, ResidentStack para el flujo del residente)
+const MainStack = createNativeStackNavigator();
+const ResidentStack = createNativeStackNavigator();
 
+// 2️⃣ Navegador anidado para las pantallas del residente
+function ResidentNavigator() {
+  return (
+    <ResidentStack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: "#3396FE" }, // Azul por defecto
+        headerTintColor: "white", // Texto blanco
+      }}
+    >
+      <ResidentStack.Screen
+        name="HomeResidente"
+        component={HomePageResidente}
+        options={{ headerShown: false }} // Oculta el header en HomeResidente
+      />
+      <ResidentStack.Screen
+        name="Panico"
+        component={BtnPanico}
+        options={{
+          title: "BOTÓN DE PÁNICO",
+          headerStyle: { backgroundColor: "#FF2929" }, // Rojo para emergencia
+          headerTintColor: "#FFF",
+          headerTitleStyle: { fontWeight: "bold" },
+        }}
+      />
+      <ResidentStack.Screen
+        name="Cuotas"
+        component={BtnCuotas}
+        options={{
+          title: "Cuotas y Servicios",
+          headerStyle: { backgroundColor: "#fff" }, // Blanco para esta sección
+          headerTintColor: "black",
+        }}
+      />
+      <ResidentStack.Screen
+        name="DetallesCuotas"
+        component={DetallesCuotas}
+        options={{ title: "Detalles de Pago" }}
+      />
+      <ResidentStack.Screen
+        name="Pago"
+        component={PantallaPago}
+        options={{ title: "Realizar Pago" }}
+      />
+      <ResidentStack.Screen
+        name="Reportes"
+        component={BtnReportes}
+        options={{ title: "Reportes" }}
+      />
+      <ResidentStack.Screen
+        name="User"
+        component={UserScreen}
+        options={{ title: "Mi Cuenta" }}
+      />
+    </ResidentStack.Navigator>
+  );
+}
+
+// 3️⃣ Navegador principal (contiene Login, Register, Home y el flujo del residente)
 export default function App() {
   return (
     <NavigationContainer>
-      <StatusBar style="light" />
-      <Stack.Navigator>
-        <Stack.Screen 
-          name="Bitacora" 
-          component={HomeScreen} 
-          options={{ headerShown: false }}
+      <MainStack.Navigator initialRouteName="Login">
+        {/* Pantallas de autenticación */}
+        <MainStack.Screen
+          name="Login"
+          component={Login}
+          options={{ headerShown: false }} // Login sin header
         />
-        <Stack.Screen 
-          name="BitacoraPersonal" 
-          component={BitacoraPersonal} 
+        <MainStack.Screen
+          name="Register"
+          component={Register}
+          options={{ title: "Registro de usuario" }} // Título personalizado
+        />
+
+        {/* Home principal (después de Login/Register) */}
+        <MainStack.Screen
+          name="Home"
+          component={Home}
           options={{
-            title: 'Bitácora de Personal',
-            headerStyle: { backgroundColor: '#000' },
-            headerTintColor: '#fff',
+            headerLeft: null, // Oculta el botón de retroceso
+            title: "Inicio",
           }}
         />
-        <Stack.Screen
-          name="BitacoraEntregas"
-          component={BitacoraEntregas}
-          options={{
-            title: 'Bitácora de Entregas',
-            headerStyle: { backgroundColor: '#000' },
-            headerTintColor: '#fff',
-          }}
+
+        {/* Flujo del residente (se accede desde Home) */}
+        <MainStack.Screen
+          name="Residente"
+          component={ResidentNavigator}
+          options={{ headerShown: false }} // Oculta header al entrar al flujo
         />
-      </Stack.Navigator>
+      </MainStack.Navigator>
     </NavigationContainer>
   );
 }
-
-function HomeScreen({ navigation }) {
-  return (
-    <View style={styles.container}>
-      <BotonBitacora navigation={navigation} />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
