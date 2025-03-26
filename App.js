@@ -1,41 +1,58 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, Button, TouchableHighlight, Pressable } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import BotonBitacora from './Componentes/BotonBitacora';
+import BitacoraPersonal from './Componentes/BitacoraPersonal';
+import BitacoraEntregas from './Componentes/BitacoraEntregas';
 
-const icon = require('./assets/favicon.png')
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <NavigationContainer>
       <StatusBar style="light" />
-      {/* <Image source={icon} style={{ width: 200, height: 200, resizeMode: 'center' }} />
-      <Image source={{ uri: "https://static.wikia.nocookie.net/peppapedia/images/c/c3/Pedre.webp/revision/latest?cb=20241118155220&path-prefix=es" }} style={{ width: 215, height: 294 }} /> */}
-      {/* <Text style={{ color: 'white' }}>Inicio de app</Text> */}
+      <Stack.Navigator>
+        <Stack.Screen 
+          name="Bitacora" 
+          component={HomeScreen} 
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="BitacoraPersonal" 
+          component={BitacoraPersonal} 
+          options={{
+            title: 'Bitácora de Personal',
+            headerStyle: { backgroundColor: '#000' },
+            headerTintColor: '#fff',
+          }}
+        />
+        <Stack.Screen
+          name="BitacoraEntregas"
+          component={BitacoraEntregas}
+          options={{
+            title: 'Bitácora de Entregas',
+            headerStyle: { backgroundColor: '#000' },
+            headerTintColor: '#fff',
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
 
-      <Pressable
-        onPress={() => {
-
-        }}
-        style={({ pressed }) => [
-          {
-            backgroundColor: pressed ? 'rgb(255, 1, 1)' : 'red',
-
-          },
-          styles.wrapperCustom,
-        ]}>
-        {({ pressed }) => (
-          <Text style={{
-            fontSize: pressed ? 32 : 16,
-          }}>{pressed ? 'S.O.S' : 'S.O.S'}</Text>
-        )}
-      </Pressable>
-    </View >
+function HomeScreen({ navigation }) {
+  return (
+    <View style={styles.container}>
+      <BotonBitacora navigation={navigation} />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#09f',
+    backgroundColor: '#ffff',
     alignItems: 'center',
     justifyContent: 'center',
   },
