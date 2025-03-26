@@ -76,7 +76,10 @@ export default function HomePageResidente() {
                 <Text style={styles.buttonText}>REPORTES DE SEGURIDAD</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.largeButton}>
+              <TouchableOpacity
+                style={styles.largeButton}
+                onPress={() => navigation.navigate("QrScreen")}
+              >
                 <Icon
                   name="qrcode"
                   size={26}

@@ -15,6 +15,9 @@ import BitacoraPersonal from "./src/Components/Pages/Componentes/BitacoraPersona
 import BitacoraEntregas from "./src/Components/Pages/Componentes/BitacoraEntregas";
 import NotificacionesScreen from "./src/Components/Pages/HomeResidente/NotificacionesScreen";
 import ConfiguracionScreen from "./src/Components/Pages/HomeResidente/ConfiguracionScreen";
+import QrScreen from "./src/Components/Pages/codigoQR/QrScreen";
+import QRgenerator from "./src/Components/Pages/codigoQR/QRgenerator";
+import QRscanner from "./src/Components/Pages/codigoQR/QRscanner";
 
 // 1️⃣ Crear los navegadores (MainStack para Login/Register/Home, ResidentStack para el flujo del residente)
 const MainStack = createNativeStackNavigator();
@@ -42,6 +45,33 @@ function ResidentNavigator() {
           headerStyle: { backgroundColor: "#FF2929" }, // Rojo para emergencia
           headerTintColor: "#FFF",
           headerTitleStyle: { fontWeight: "bold" },
+        }}
+      />
+      <ResidentStack.Screen
+        name="QrScreen"
+        component={QrScreen}
+        options={{
+          title: "Generar QR",
+          headerStyle: { backgroundColor: "#3396FE" },
+          headerTintColor: "white",
+        }}
+      />
+      <ResidentStack.Screen
+        name="QRgenerator"
+        component={QRgenerator}
+        options={{
+          title: "Generar QR",
+          headerStyle: { backgroundColor: "#3396FE" },
+          headerTintColor: "white",
+        }}
+      />
+      <ResidentStack.Screen
+        name="QRscanner"
+        component={QRscanner}
+        options={{
+          title: "Escanear QR",
+          headerStyle: { backgroundColor: "#3396FE" },
+          headerTintColor: "white",
         }}
       />
       <ResidentStack.Screen
