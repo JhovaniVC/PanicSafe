@@ -1,89 +1,157 @@
-import 'react-native-gesture-handler';  // Asegúrate de agregar esta línea
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import QRgenerator from './pages/QRgenerator';  // Verifica que la ruta sea correcta
-import QRscanner from './pages/QRscanner';  // Verifica que la ruta sea correcta
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Login from "./src/Components/Pages/Login";
+import Register from "./src/Components/Pages/Register";
+import Home from "./src/Components/Pages/Home";
+import HomePageResidente from "./src/Components/Pages/HomeResidente/HomePageResidente";
+import BtnPanico from "./src/Components/Pages/panico/BtnPanico";
+import BtnCuotas from "./src/Components/Pages/cuotas/BtnCuotas";
+import DetallesCuotas from "./src/Components/Pages/cuotas/DetallesCuotas";
+import PantallaPago from "./src/Components/Pages/cuotas/PantallaPago";
+import BtnReportes from "./src/Components/Pages/Reportes/BtnReportes";
+import UserScreen from "./src/Components/Pages/HomeResidente/UserScreen";
+import BotonBitacora from "./src/Components/Pages/Componentes/BotonBitacora";
+import BitacoraPersonal from "./src/Components/Pages/Componentes/BitacoraPersonal";
+import BitacoraEntregas from "./src/Components/Pages/Componentes/BitacoraEntregas";
+import NotificacionesScreen from "./src/Components/Pages/HomeResidente/NotificacionesScreen";
+import ConfiguracionScreen from "./src/Components/Pages/HomeResidente/ConfiguracionScreen";
 
-// Crear el stack navigator
-const Stack = createStackNavigator();
+// 1️⃣ Crear los navegadores (MainStack para Login/Register/Home, ResidentStack para el flujo del residente)
+const MainStack = createNativeStackNavigator();
+const ResidentStack = createNativeStackNavigator();
 
-// Pantalla principal
-function HomeScreen({ navigation }) {
+// 2️⃣ Navegador anidado para las pantallas del residente
+function ResidentNavigator() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Bienvenido a PanicSafe</Text>
-      <Text style={styles.subtitle}>Elige una opción para continuar</Text>
-      <StatusBar style="auto" />
-      
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('QRgenerator')} // Navegar a QRgenerator
-      >
-        <Text style={styles.buttonText}>Generar QR</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('QRscanner')} // Navegar a QRscanner
-      >
-        <Text style={styles.buttonText}>Escanear QR</Text>
-      </TouchableOpacity>
-    </View>
+    <ResidentStack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: "#3396FE" }, // Azul por defecto
+        headerTintColor: "white", // Texto blanco
+      }}
+    >
+      <ResidentStack.Screen
+        name="HomeResidente"
+        component={HomePageResidente}
+        options={{ headerShown: false }} // Oculta el header en HomeResidente
+      />
+      <ResidentStack.Screen
+        name="Panico"
+        component={BtnPanico}
+        options={{
+          title: "BOTÓN DE PÁNICO",
+          headerStyle: { backgroundColor: "#FF2929" }, // Rojo para emergencia
+          headerTintColor: "#FFF",
+          headerTitleStyle: { fontWeight: "bold" },
+        }}
+      />
+      <ResidentStack.Screen
+        name="Notificaciones"
+        component={NotificacionesScreen}
+        options={{
+          title: "Notificaciones",
+          headerStyle: { backgroundColor: "#000" },
+          headerTintColor: "#fff",
+        }}
+      />
+      <ResidentStack.Screen
+        name="Configuracion"
+        component={ConfiguracionScreen}
+        options={{
+          title: "Configuración",
+          headerStyle: { backgroundColor: "#000" },
+          headerTintColor: "#fff",
+        }}
+      />
+      <ResidentStack.Screen
+        name="Bitacora"
+        component={BotonBitacora}
+        options={{ headerShown: false }}
+      />
+      <ResidentStack.Screen
+        name="BitacoraPersonal"
+        component={BitacoraPersonal}
+        options={{
+          title: "Bitácora de Personal",
+          headerStyle: { backgroundColor: "#000" },
+          headerTintColor: "#fff",
+        }}
+      />
+      <ResidentStack.Screen
+        name="BitacoraEntregas"
+        component={BitacoraEntregas}
+        options={{
+          title: "Bitácora de Entregas",
+          headerStyle: { backgroundColor: "#000" },
+          headerTintColor: "#fff",
+        }}
+      />
+      <ResidentStack.Screen
+        name="Cuotas"
+        component={BtnCuotas}
+        options={{
+          title: "Cuotas y Servicios",
+          headerStyle: { backgroundColor: "#fff" }, // Blanco para esta sección
+          headerTintColor: "black",
+        }}
+      />
+      <ResidentStack.Screen
+        name="DetallesCuotas"
+        component={DetallesCuotas}
+        options={{ title: "Detalles de Pago" }}
+      />
+      <ResidentStack.Screen
+        name="Pago"
+        component={PantallaPago}
+        options={{ title: "Realizar Pago" }}
+      />
+      <ResidentStack.Screen
+        name="Reportes"
+        component={BtnReportes}
+        options={{ title: "Reportes" }}
+      />
+      <ResidentStack.Screen
+        name="User"
+        component={UserScreen}
+        options={{ title: "Mi Cuenta" }}
+      />
+    </ResidentStack.Navigator>
   );
 }
 
-// Configuración de navegación
+// 3️⃣ Navegador principal (contiene Login, Register, Home y el flujo del residente)
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="QRgenerator" component={QRgenerator} />
-        <Stack.Screen name="QRscanner" component={QRscanner} />
-      </Stack.Navigator>
+      <MainStack.Navigator initialRouteName="Login">
+        {/* Pantallas de autenticación */}
+        <MainStack.Screen
+          name="Login"
+          component={Login}
+          options={{ headerShown: false }} // Login sin header
+        />
+        <MainStack.Screen
+          name="Register"
+          component={Register}
+          options={{ title: "Registro de usuario" }} // Título personalizado
+        />
+
+        {/* Home principal (después de Login/Register) */}
+        <MainStack.Screen
+          name="Home"
+          component={Home}
+          options={{
+            headerLeft: null, // Oculta el botón de retroceso
+            title: "Inicio",
+          }}
+        />
+
+        {/* Flujo del residente (se accede desde Home) */}
+        <MainStack.Screen
+          name="Residente"
+          component={ResidentNavigator}
+          options={{ headerShown: false }} // Oculta header al entrar al flujo
+        />
+      </MainStack.Navigator>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f7f7f7',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#3b3b3b',
-    marginBottom: 10,
-  },
-  subtitle: {
-    fontSize: 18,
-    color: '#666',
-    marginBottom: 40,
-  },
-  button: {
-    backgroundColor: '#1988c3',
-    paddingVertical: 20,
-    paddingHorizontal: 50,
-    borderRadius: 15,
-    marginVertical: 15,
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 10,
-    minWidth: 250,
-    minHeight: 60,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-});
