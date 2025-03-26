@@ -1,8 +1,10 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const NavBar = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.tab}>
@@ -15,12 +17,20 @@ const NavBar = () => {
         <Text style={styles.tabText}>Configuración</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.tab}>
+      <TouchableOpacity
+        style={styles.tab}
+        onPress={() =>
+          navigation.navigate("Residente", { screen: "HomeResidente" })
+        }
+      >
         <FontAwesome name="home" size={24} color="#fff" />
         <Text style={styles.tabText}>Home</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.tab}>
+      <TouchableOpacity
+        style={styles.tab}
+        onPress={() => navigation.navigate("Residente", { screen: "User" })}
+      >
         <FontAwesome name="user" size={24} color="#fff" />
         <Text style={styles.tabText}>User</Text>
       </TouchableOpacity>

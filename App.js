@@ -9,6 +9,7 @@ import BtnCuotas from "./src/Components/Pages/cuotas/BtnCuotas";
 import DetallesCuotas from "./src/Components/Pages/cuotas/DetallesCuotas";
 import PantallaPago from "./src/Components/Pages/cuotas/PantallaPago";
 import BtnReportes from "./src/Components/Pages/Reportes/BtnReportes";
+import UserScreen from "./src/Components/Pages/HomeResidente/UserScreen";
 
 // 1️⃣ Crear los navegadores (MainStack para Login/Register/Home, ResidentStack para el flujo del residente)
 const MainStack = createNativeStackNavigator();
@@ -61,6 +62,11 @@ function ResidentNavigator() {
         name="Reportes"
         component={BtnReportes}
         options={{ title: "Reportes" }}
+      />
+      <ResidentStack.Screen
+        name="User"
+        component={UserScreen}
+        options={{ title: "Mi Cuenta" }}
       />
     </ResidentStack.Navigator>
   );
