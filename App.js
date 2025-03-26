@@ -9,6 +9,15 @@ import BtnCuotas from "./src/Components/Pages/cuotas/BtnCuotas";
 import DetallesCuotas from "./src/Components/Pages/cuotas/DetallesCuotas";
 import PantallaPago from "./src/Components/Pages/cuotas/PantallaPago";
 import BtnReportes from "./src/Components/Pages/Reportes/BtnReportes";
+import UserScreen from "./src/Components/Pages/HomeResidente/UserScreen";
+import BotonBitacora from "./src/Components/Pages/Componentes/BotonBitacora";
+import BitacoraPersonal from "./src/Components/Pages/Componentes/BitacoraPersonal";
+import BitacoraEntregas from "./src/Components/Pages/Componentes/BitacoraEntregas";
+import NotificacionesScreen from "./src/Components/Pages/HomeResidente/NotificacionesScreen";
+import ConfiguracionScreen from "./src/Components/Pages/HomeResidente/ConfiguracionScreen";
+import QrScreen from "./src/Components/Pages/codigoQR/QrScreen";
+import QRgenerator from "./src/Components/Pages/codigoQR/QRgenerator";
+import QRscanner from "./src/Components/Pages/codigoQR/QRscanner";
 
 // 1️⃣ Crear los navegadores (MainStack para Login/Register/Home, ResidentStack para el flujo del residente)
 const MainStack = createNativeStackNavigator();
@@ -39,6 +48,74 @@ function ResidentNavigator() {
         }}
       />
       <ResidentStack.Screen
+        name="QrScreen"
+        component={QrScreen}
+        options={{
+          title: "Generar QR",
+          headerStyle: { backgroundColor: "#3396FE" },
+          headerTintColor: "white",
+        }}
+      />
+      <ResidentStack.Screen
+        name="QRgenerator"
+        component={QRgenerator}
+        options={{
+          title: "Generar QR",
+          headerStyle: { backgroundColor: "#3396FE" },
+          headerTintColor: "white",
+        }}
+      />
+      <ResidentStack.Screen
+        name="QRscanner"
+        component={QRscanner}
+        options={{
+          title: "Escanear QR",
+          headerStyle: { backgroundColor: "#3396FE" },
+          headerTintColor: "white",
+        }}
+      />
+      <ResidentStack.Screen
+        name="Notificaciones"
+        component={NotificacionesScreen}
+        options={{
+          title: "Notificaciones",
+          headerStyle: { backgroundColor: "#000" },
+          headerTintColor: "#fff",
+        }}
+      />
+      <ResidentStack.Screen
+        name="Configuracion"
+        component={ConfiguracionScreen}
+        options={{
+          title: "Configuración",
+          headerStyle: { backgroundColor: "#000" },
+          headerTintColor: "#fff",
+        }}
+      />
+      <ResidentStack.Screen
+        name="Bitacora"
+        component={BotonBitacora}
+        options={{ headerShown: false }}
+      />
+      <ResidentStack.Screen
+        name="BitacoraPersonal"
+        component={BitacoraPersonal}
+        options={{
+          title: "Bitácora de Personal",
+          headerStyle: { backgroundColor: "#000" },
+          headerTintColor: "#fff",
+        }}
+      />
+      <ResidentStack.Screen
+        name="BitacoraEntregas"
+        component={BitacoraEntregas}
+        options={{
+          title: "Bitácora de Entregas",
+          headerStyle: { backgroundColor: "#000" },
+          headerTintColor: "#fff",
+        }}
+      />
+      <ResidentStack.Screen
         name="Cuotas"
         component={BtnCuotas}
         options={{
@@ -61,6 +138,11 @@ function ResidentNavigator() {
         name="Reportes"
         component={BtnReportes}
         options={{ title: "Reportes" }}
+      />
+      <ResidentStack.Screen
+        name="User"
+        component={UserScreen}
+        options={{ title: "Mi Cuenta" }}
       />
     </ResidentStack.Navigator>
   );

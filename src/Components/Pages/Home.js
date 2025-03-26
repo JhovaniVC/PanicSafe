@@ -1,8 +1,6 @@
-import { View, Text, Button, StyleSheet } from 'react-native';
-import { CommonActions } from '@react-navigation/native';
+import { View, Text, Button, StyleSheet } from "react-native";
+import { CommonActions } from "@react-navigation/native";
 import { auth } from "../../firebaseConfig";
-
-
 
 const Home = ({ navigation }) => {
   const handleLogout = () => {
@@ -10,7 +8,7 @@ const Home = ({ navigation }) => {
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
-          routes: [{ name: 'Login' }],
+          routes: [{ name: "Login" }],
         })
       );
     });
@@ -27,14 +25,14 @@ const Home = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
   },
   title: {
     fontSize: 20,
-    marginBottom: 20
-  }
+    marginBottom: 20,
+  },
 });
 
 export default Home;
