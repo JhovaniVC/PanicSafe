@@ -10,6 +10,11 @@ import DetallesCuotas from "./src/Components/Pages/cuotas/DetallesCuotas";
 import PantallaPago from "./src/Components/Pages/cuotas/PantallaPago";
 import BtnReportes from "./src/Components/Pages/Reportes/BtnReportes";
 import UserScreen from "./src/Components/Pages/HomeResidente/UserScreen";
+import BotonBitacora from "./src/Components/Pages/Componentes/BotonBitacora";
+import BitacoraPersonal from "./src/Components/Pages/Componentes/BitacoraPersonal";
+import BitacoraEntregas from "./src/Components/Pages/Componentes/BitacoraEntregas";
+import NotificacionesScreen from "./src/Components/Pages/HomeResidente/NotificacionesScreen";
+import ConfiguracionScreen from "./src/Components/Pages/HomeResidente/ConfiguracionScreen";
 
 // 1️⃣ Crear los navegadores (MainStack para Login/Register/Home, ResidentStack para el flujo del residente)
 const MainStack = createNativeStackNavigator();
@@ -37,6 +42,47 @@ function ResidentNavigator() {
           headerStyle: { backgroundColor: "#FF2929" }, // Rojo para emergencia
           headerTintColor: "#FFF",
           headerTitleStyle: { fontWeight: "bold" },
+        }}
+      />
+      <ResidentStack.Screen
+        name="Notificaciones"
+        component={NotificacionesScreen}
+        options={{
+          title: "Notificaciones",
+          headerStyle: { backgroundColor: "#000" },
+          headerTintColor: "#fff",
+        }}
+      />
+      <ResidentStack.Screen
+        name="Configuracion"
+        component={ConfiguracionScreen}
+        options={{
+          title: "Configuración",
+          headerStyle: { backgroundColor: "#000" },
+          headerTintColor: "#fff",
+        }}
+      />
+      <ResidentStack.Screen
+        name="Bitacora"
+        component={BotonBitacora}
+        options={{ headerShown: false }}
+      />
+      <ResidentStack.Screen
+        name="BitacoraPersonal"
+        component={BitacoraPersonal}
+        options={{
+          title: "Bitácora de Personal",
+          headerStyle: { backgroundColor: "#000" },
+          headerTintColor: "#fff",
+        }}
+      />
+      <ResidentStack.Screen
+        name="BitacoraEntregas"
+        component={BitacoraEntregas}
+        options={{
+          title: "Bitácora de Entregas",
+          headerStyle: { backgroundColor: "#000" },
+          headerTintColor: "#fff",
         }}
       />
       <ResidentStack.Screen

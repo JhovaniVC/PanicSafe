@@ -7,12 +7,22 @@ const NavBar = () => {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.tab}>
+      <TouchableOpacity
+        style={styles.tab}
+        onPress={() =>
+          navigation.navigate("Residente", { screen: "Notificaciones" })
+        }
+      >
         <FontAwesome name="bell" size={24} color="#fff" />
         <Text style={styles.tabText}>Notificaciones</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.tab}>
+      <TouchableOpacity
+        style={styles.tab}
+        onPress={() =>
+          navigation.navigate("Residente", { screen: "Configuracion" })
+        }
+      >
         <FontAwesome name="cog" size={24} color="#fff" />
         <Text style={styles.tabText}>Configuración</Text>
       </TouchableOpacity>

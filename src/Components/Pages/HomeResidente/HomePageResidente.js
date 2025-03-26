@@ -48,15 +48,19 @@ export default function HomePageResidente() {
             <View style={styles.optionsContainer}>
               <TouchableOpacity
                 style={styles.largeButton}
-                onPress={() => navigation.navigate("Cuotas")}
+                onPress={() =>
+                  navigation.navigate("Residente", {
+                    screen: "Bitacora",
+                  })
+                }
               >
                 <Icon
-                  name="money"
+                  name="book"
                   size={26}
                   color="#3396FE"
                   style={styles.buttonIcon}
                 />
-                <Text style={styles.buttonText}>CUOTAS Y SERVICIOS</Text>
+                <Text style={styles.buttonText}>Bitacoras</Text>
               </TouchableOpacity>
 
               <TouchableOpacity

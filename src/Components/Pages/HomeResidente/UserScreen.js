@@ -1,8 +1,26 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { CommonActions } from "@react-navigation/native";
+import { auth } from "../../../firebaseConfig";
 
-const UserScreen = () => {
+const UserScreen = ({ navigation }) => {
+  const handleLogout = () => {
+    auth
+      .signOut()
+      .then(() => {
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: "Login" }],
+          })
+        );
+      })
+      .catch((error) => {
+        console.error("Error al cerrar sesión:", error);
+      });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.profileHeader}>
@@ -21,6 +39,10 @@ const UserScreen = () => {
           <Text style={styles.infoValue}>pedropony@gmail.com</Text>
         </View>
       </View>
+
+      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+        <Text style={styles.logoutButtonText}>Cerrar Sesión</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -45,6 +67,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 10,
     padding: 20,
+    marginBottom: 20,
   },
   infoRow: {
     flexDirection: "row",
@@ -60,6 +83,17 @@ const styles = StyleSheet.create({
   infoValue: {
     fontSize: 16,
     fontWeight: "500",
+  },
+  logoutButton: {
+    backgroundColor: "#FF3B30",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  logoutButtonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 
