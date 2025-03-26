@@ -48,15 +48,19 @@ export default function HomePageResidente() {
             <View style={styles.optionsContainer}>
               <TouchableOpacity
                 style={styles.largeButton}
-                onPress={() => navigation.navigate("Cuotas")}
+                onPress={() =>
+                  navigation.navigate("Residente", {
+                    screen: "Bitacora",
+                  })
+                }
               >
                 <Icon
-                  name="money"
+                  name="book"
                   size={26}
                   color="#3396FE"
                   style={styles.buttonIcon}
                 />
-                <Text style={styles.buttonText}>CUOTAS Y SERVICIOS</Text>
+                <Text style={styles.buttonText}>Bitacoras</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -72,7 +76,10 @@ export default function HomePageResidente() {
                 <Text style={styles.buttonText}>REPORTES DE SEGURIDAD</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.largeButton}>
+              <TouchableOpacity
+                style={styles.largeButton}
+                onPress={() => navigation.navigate("QrScreen")}
+              >
                 <Icon
                   name="qrcode"
                   size={26}

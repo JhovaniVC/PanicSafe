@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import NavBar from "../../HomeResidente/NavBar";
+import NavBar from "../HomeResidente/NavBar";
 
 export default function DetallesCuotas() {
   return (

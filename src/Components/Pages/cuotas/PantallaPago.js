@@ -9,7 +9,7 @@ import {
   Pressable,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import NavBar from "../../HomeResidente/NavBar";
+import NavBar from "../HomeResidente/NavBar";
 
 export default function PantallaPago() {
   const navigation = useNavigation();

@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Pressable, Linking } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
-import NavBarPanico from "./NavBarPanico";
+import NavBar from "../HomeResidente/NavBar";
 
 export default function BtnPanico() {
   const navigation = useNavigation();
@@ -60,7 +60,7 @@ export default function BtnPanico() {
         <Icon name="exclamation-circle" size={50} color="white" />
         <Text style={styles.sosText}>S.O.S</Text>
       </Pressable>
-      <NavBarPanico />
+      <NavBar />
     </View>
   );
 }

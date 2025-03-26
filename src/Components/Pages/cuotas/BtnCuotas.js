@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import NavBarCuotas from "./NavBarCuotas";
+import NavBar from "../HomeResidente/NavBar";
 
 export default function BtnCuotas() {
   const navigation = useNavigation();
@@ -36,7 +36,7 @@ export default function BtnCuotas() {
           <Text style={styles.paymentButtonText}>Realizar Pago</Text>
         </TouchableOpacity>
       </View>
-      <NavBarCuotas />
+      <NavBar />
     </View>
   );
 }
