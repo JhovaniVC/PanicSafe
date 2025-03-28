@@ -13,15 +13,45 @@ import styles from "./styles";
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [accessCode, setAccessCode] = useState("");
 
   const handleLogin = async () => {
+    if (!email || !password) {
+      alert("Todos los campos son obligatorios. Por favor, complete el formulario.");
+      return;
+    }
+
     try {
       await signInWithEmailAndPassword(auth, email, password);
       alert("Inicio de sesión exitoso");
       navigation.navigate("Residente");
     } catch (error) {
-      alert(error.message);
+      console.error("Firebase Auth Error:", error.code, error.message);
+      let errorMessage = "Ocurrió un error. Inténtelo de nuevo.";
+
+      if (error.code) {
+        switch (error.code) {
+          case "auth/invalid-email":
+            errorMessage = "Correo electrónico inválido.";
+            break;
+          case "auth/user-not-found":
+            errorMessage = "No se encontró una cuenta con este correo. Regístrese primero.";
+            break;
+          case "auth/wrong-password":
+          case "auth/invalid-credential":
+            errorMessage = "Correo o contraseña incorrectos. Inténtelo de nuevo.";
+            break;
+          case "auth/missing-password":
+            errorMessage = "Debe ingresar una contraseña.";
+            break;
+          case "auth/too-many-requests":
+            errorMessage = "Demasiados intentos fallidos. Inténtelo más tarde.";
+            break;
+          default:
+            errorMessage = `Error: ${error.message}`;
+        }
+      }
+      
+      alert(errorMessage);
     }
   };
 
