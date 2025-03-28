@@ -3,8 +3,12 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { CommonActions } from "@react-navigation/native";
 import { auth } from "../../../firebaseConfig";
+import { useTheme } from "../ThemeContext";
+import NavBar from "./NavBar";
 
 const UserScreen = ({ navigation }) => {
+  const { colors, darkMode } = useTheme();
+
   const handleLogout = () => {
     auth
       .signOut()
@@ -22,27 +26,39 @@ const UserScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.profileHeader}>
-        <FontAwesome name="user-circle" size={80} color="#3396FE" />
-        <Text style={styles.profileName}>Pedro Pony</Text>
+        <FontAwesome name="user-circle" size={80} color={colors.primary} />
+        <Text style={[styles.profileName, { color: colors.text }]}>
+          Pedro Pony
+        </Text>
       </View>
 
-      <View style={styles.infoContainer}>
-        <View style={styles.infoRow}>
-          <Text style={styles.infoLabel}>No. departamento</Text>
-          <Text style={styles.infoValue}>512</Text>
+      <View style={[styles.infoContainer, { backgroundColor: colors.card }]}>
+        <View style={[styles.infoRow, { borderBottomColor: colors.border }]}>
+          <Text style={[styles.infoLabel, { color: colors.secondaryText }]}>
+            No. departamento
+          </Text>
+          <Text style={[styles.infoValue, { color: colors.text }]}>512</Text>
         </View>
 
         <View style={[styles.infoRow, { borderBottomWidth: 0 }]}>
-          <Text style={styles.infoLabel}>Email</Text>
-          <Text style={styles.infoValue}>pedropony@gmail.com</Text>
+          <Text style={[styles.infoLabel, { color: colors.secondaryText }]}>
+            Email
+          </Text>
+          <Text style={[styles.infoValue, { color: colors.text }]}>
+            pedropony@gmail.com
+          </Text>
         </View>
       </View>
 
-      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+      <TouchableOpacity
+        style={[styles.logoutButton, { backgroundColor: colors.danger }]}
+        onPress={handleLogout}
+      >
         <Text style={styles.logoutButtonText}>Cerrar Sesión</Text>
       </TouchableOpacity>
+      <NavBar />
     </View>
   );
 };
@@ -50,7 +66,6 @@ const UserScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
     padding: 20,
   },
   profileHeader: {
@@ -64,7 +79,6 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   infoContainer: {
-    backgroundColor: "white",
     borderRadius: 10,
     padding: 20,
     marginBottom: 20,
@@ -74,18 +88,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingVertical: 15,
     borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
   },
   infoLabel: {
     fontSize: 16,
-    color: "#666",
   },
   infoValue: {
     fontSize: 16,
     fontWeight: "500",
   },
   logoutButton: {
-    backgroundColor: "#FF3B30",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",

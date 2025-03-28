@@ -13,8 +13,10 @@ import {
 import Icon from "react-native-vector-icons/FontAwesome";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import NavBar from "../HomeResidente/NavBar";
+import { useTheme } from "../ThemeContext";
 
-export default function BitacoraPersonal() {
+export default function BitacoraEntregas() {
+  const { colors, darkMode } = useTheme();
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
@@ -60,19 +62,35 @@ export default function BitacoraPersonal() {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
+      style={[styles.container, { backgroundColor: colors.background }]}
     >
-      <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.title}>Bitácora de Entregas</Text>
+      <ScrollView
+        contentContainerStyle={[
+          styles.content,
+          { backgroundColor: colors.background },
+        ]}
+        keyboardShouldPersistTaps="handled"
+      >
+        <Text style={[styles.title, { color: colors.text }]}>
+          Bitácora de Entregas
+        </Text>
 
         {/* Sección Fecha y Hora con iconos a la izquierda */}
-        <View style={styles.datetimeRow}>
+        <View
+          style={[
+            styles.datetimeRow,
+            {
+              backgroundColor: colors.card,
+              borderColor: colors.border,
+            },
+          ]}
+        >
           <View style={styles.iconContainer}>
             <TouchableOpacity onPress={() => setShowDatePicker(true)}>
               <Icon
                 name="calendar"
                 size={24}
-                color="#007bff"
+                color={colors.primary}
                 style={styles.icon}
               />
             </TouchableOpacity>
@@ -80,15 +98,19 @@ export default function BitacoraPersonal() {
               <Icon
                 name="clock-o"
                 size={24}
-                color="#007bff"
+                color={colors.primary}
                 style={styles.icon}
               />
             </TouchableOpacity>
           </View>
 
           <View style={styles.datetimeDisplay}>
-            <Text style={styles.datetimeText}>{formatDate()}</Text>
-            <Text style={styles.datetimeText}>{formatTime()}</Text>
+            <Text style={[styles.datetimeText, { color: colors.text }]}>
+              {formatDate()}
+            </Text>
+            <Text style={[styles.datetimeText, { color: colors.text }]}>
+              {formatTime()}
+            </Text>
           </View>
         </View>
 
@@ -96,9 +118,10 @@ export default function BitacoraPersonal() {
           <DateTimePicker
             value={date}
             mode="date"
-            display="default"
+            display={darkMode ? "spinner" : "default"}
             onChange={onChangeDate}
             locale="es-ES"
+            themeVariant={darkMode ? "dark" : "light"}
           />
         )}
 
@@ -106,61 +129,104 @@ export default function BitacoraPersonal() {
           <DateTimePicker
             value={date}
             mode="time"
-            display="default"
+            display={darkMode ? "spinner" : "default"}
             onChange={onChangeTime}
             locale="es-ES"
             is24Hour={true}
+            themeVariant={darkMode ? "dark" : "light"}
           />
         )}
 
         {/* Formulario */}
         <View style={styles.formSection}>
-          <Text style={styles.sectionTitle}>Motivo</Text>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>
+            Motivo
+          </Text>
           <TextInput
-            style={styles.input}
+            style={[
+              styles.input,
+              {
+                backgroundColor: colors.inputBackground,
+                borderColor: colors.border,
+                color: colors.text,
+              },
+            ]}
             value={motivo}
             onChangeText={setMotivo}
             placeholder="Ingrese el motivo"
+            placeholderTextColor={colors.placeholder}
           />
         </View>
 
         <View style={styles.formSection}>
-          <Text style={styles.sectionTitle}>Descripción</Text>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>
+            Descripción
+          </Text>
           <TextInput
-            style={[styles.input, styles.multilineInput]}
+            style={[
+              styles.input,
+              styles.multilineInput,
+              {
+                backgroundColor: colors.inputBackground,
+                borderColor: colors.border,
+                color: colors.text,
+              },
+            ]}
             value={descripcion}
             onChangeText={setDescripcion}
             placeholder="Describa el evento"
+            placeholderTextColor={colors.placeholder}
             multiline
           />
         </View>
 
         <View style={styles.formSection}>
-          <Text style={styles.sectionTitle}>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>
             Información a resaltar (opcional):
           </Text>
           <TextInput
-            style={[styles.input, styles.multilineInput]}
+            style={[
+              styles.input,
+              styles.multilineInput,
+              {
+                backgroundColor: colors.inputBackground,
+                borderColor: colors.border,
+                color: colors.text,
+              },
+            ]}
             value={infoResaltar}
             onChangeText={setInfoResaltar}
             placeholder="Información importante"
+            placeholderTextColor={colors.placeholder}
             multiline
           />
         </View>
 
-        {/* Campo de Contacto opcional agregado */}
         <View style={styles.formSection}>
-          <Text style={styles.sectionTitle}>Contacto (opcional):</Text>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>
+            Contacto (opcional):
+          </Text>
           <TextInput
-            style={styles.input}
+            style={[
+              styles.input,
+              {
+                backgroundColor: colors.inputBackground,
+                borderColor: colors.border,
+                color: colors.text,
+              },
+            ]}
             value={contacto}
             onChangeText={setContacto}
             placeholder="Teléfono de contacto"
+            placeholderTextColor={colors.placeholder}
             keyboardType="phone-pad"
           />
         </View>
 
-        <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+        <TouchableOpacity
+          style={[styles.saveButton, { backgroundColor: colors.primary }]}
+          onPress={handleSave}
+        >
           <Text style={styles.saveButtonText}>Guardar Registro</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -172,7 +238,6 @@ export default function BitacoraPersonal() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
   },
   content: {
     padding: 20,
@@ -182,18 +247,15 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
-    color: "#333",
     textAlign: "center",
   },
   datetimeRow: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 20,
-    backgroundColor: "#fff",
     borderRadius: 8,
     padding: 10,
     borderWidth: 1,
-    borderColor: "#ddd",
   },
   iconContainer: {
     flexDirection: "row",
@@ -207,7 +269,6 @@ const styles = StyleSheet.create({
   },
   datetimeText: {
     fontSize: 16,
-    color: "#333",
     marginRight: 15,
   },
   formSection: {
@@ -217,14 +278,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     marginBottom: 8,
-    color: "#555",
   },
   input: {
-    backgroundColor: "#fff",
     padding: 15,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: "#ddd",
     fontSize: 16,
   },
   multilineInput: {
@@ -232,7 +290,6 @@ const styles = StyleSheet.create({
     textAlignVertical: "top",
   },
   saveButton: {
-    backgroundColor: "#000",
     padding: 15,
     borderRadius: 8,
     alignItems: "center",
@@ -242,24 +299,5 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 18,
     fontWeight: "bold",
-  },
-  navBar: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    paddingVertical: 10,
-    backgroundColor: "#000",
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-  },
-  navItem: {
-    alignItems: "center",
-  },
-  navText: {
-    fontSize: 12,
-    color: "#fff",
-    marginTop: 5,
   },
 });

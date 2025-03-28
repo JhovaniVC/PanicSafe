@@ -1,4 +1,4 @@
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "./src/Components/Pages/Login";
 import Register from "./src/Components/Pages/Register";
@@ -18,6 +18,7 @@ import ConfiguracionScreen from "./src/Components/Pages/HomeResidente/Configurac
 import QrScreen from "./src/Components/Pages/codigoQR/QrScreen";
 import QRgenerator from "./src/Components/Pages/codigoQR/QRgenerator";
 import QRscanner from "./src/Components/Pages/codigoQR/QRscanner";
+import { ThemeProvider } from "./src/Components/Pages/ThemeContext";
 
 // 1️⃣ Crear los navegadores (MainStack para Login/Register/Home, ResidentStack para el flujo del residente)
 const MainStack = createNativeStackNavigator();
@@ -25,6 +26,8 @@ const ResidentStack = createNativeStackNavigator();
 
 // 2️⃣ Navegador anidado para las pantallas del residente
 function ResidentNavigator() {
+  const { colors } = useTheme();
+
   return (
     <ResidentStack.Navigator
       screenOptions={{
@@ -151,37 +154,39 @@ function ResidentNavigator() {
 // 3️⃣ Navegador principal (contiene Login, Register, Home y el flujo del residente)
 export default function App() {
   return (
-    <NavigationContainer>
-      <MainStack.Navigator initialRouteName="Login">
-        {/* Pantallas de autenticación */}
-        <MainStack.Screen
-          name="Login"
-          component={Login}
-          options={{ headerShown: false }} // Login sin header
-        />
-        <MainStack.Screen
-          name="Register"
-          component={Register}
-          options={{ title: "Registro de usuario" }} // Título personalizado
-        />
+    <ThemeProvider>
+      <NavigationContainer>
+        <MainStack.Navigator initialRouteName="Login">
+          {/* Pantallas de autenticación */}
+          <MainStack.Screen
+            name="Login"
+            component={Login}
+            options={{ headerShown: false }} // Login sin header
+          />
+          <MainStack.Screen
+            name="Register"
+            component={Register}
+            options={{ title: "Registro de usuario" }} // Título personalizado
+          />
 
-        {/* Home principal (después de Login/Register) */}
-        <MainStack.Screen
-          name="Home"
-          component={Home}
-          options={{
-            headerLeft: null, // Oculta el botón de retroceso
-            title: "Inicio",
-          }}
-        />
+          {/* Home principal (después de Login/Register) */}
+          <MainStack.Screen
+            name="Home"
+            component={Home}
+            options={{
+              headerLeft: null, // Oculta el botón de retroceso
+              title: "Inicio",
+            }}
+          />
 
-        {/* Flujo del residente (se accede desde Home) */}
-        <MainStack.Screen
-          name="Residente"
-          component={ResidentNavigator}
-          options={{ headerShown: false }} // Oculta header al entrar al flujo
-        />
-      </MainStack.Navigator>
-    </NavigationContainer>
+          {/* Flujo del residente (se accede desde Home) */}
+          <MainStack.Screen
+            name="Residente"
+            component={ResidentNavigator}
+            options={{ headerShown: false }} // Oculta header al entrar al flujo
+          />
+        </MainStack.Navigator>
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }
