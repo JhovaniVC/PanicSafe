@@ -6,43 +6,58 @@ import {
   StyleSheet,
   SafeAreaView,
 } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
 import NavBar from "../HomeResidente/NavBar";
+import { useTheme } from "../ThemeContext";
 
 export default function MainMenu({ navigation }) {
+  const { colors, darkMode } = useTheme();
+
   const goBack = () => {
     navigation.goBack();
   };
 
   return (
-    <SafeAreaView style={[styles.safeArea, { flex: 1 }]}>
-      {/* Barra de título superior */}
-      <View style={styles.topBar}>
-        <TouchableOpacity onPress={goBack} style={styles.goBackButton}>
-          <Icon name="caret-left" size={30} color="#fff" />
-        </TouchableOpacity>
-        <View style={styles.topBarTextWrapper}>
-          <Text style={styles.topBarText}>Bitácora</Text>
+    <SafeAreaView
+      style={[styles.safeArea, { backgroundColor: colors.background }]}
+    >
+      {/* Contenido principal con fondo dinámico */}
+      <View style={[styles.container, { backgroundColor: colors.background }]}>
+        {/* Header con estilo dinámico */}
+        <View
+          style={[
+            styles.headerContainer,
+            { backgroundColor: darkMode ? colors.card : "#FFFFFF" },
+          ]}
+        >
+          <TouchableOpacity onPress={goBack} style={styles.backButton}>
+            <Text style={[styles.backIcon, { color: colors.primary }]}>
+              {"<"}
+            </Text>
+            <Text style={[styles.backText, { color: colors.primary }]}>
+              Back
+            </Text>
+          </TouchableOpacity>
+          <Text style={[styles.title, { color: colors.text }]}>Bitácora</Text>
         </View>
-      </View>
 
-      {/* Contenido principal */}
-      <View style={styles.content}>
-        {/* Botón de Bitácora Personal */}
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate("BitacoraPersonal")}
-        >
-          <Text style={styles.buttonText}>Bitácora de Personal</Text>
-        </TouchableOpacity>
+        {/* Contenido de la pantalla */}
+        <View style={styles.content}>
+          {/* Botón de Bitácora Personal */}
+          <TouchableOpacity
+            style={[styles.button, { backgroundColor: colors.primary }]}
+            onPress={() => navigation.navigate("BitacoraPersonal")}
+          >
+            <Text style={styles.buttonText}>Bitácora de Personal</Text>
+          </TouchableOpacity>
 
-        {/* Botón de Entregas */}
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate("BitacoraEntregas")}
-        >
-          <Text style={styles.buttonText}>Bitácora de Entregas</Text>
-        </TouchableOpacity>
+          {/* Botón de Entregas */}
+          <TouchableOpacity
+            style={[styles.button, { backgroundColor: colors.primary }]}
+            onPress={() => navigation.navigate("BitacoraEntregas")}
+          >
+            <Text style={styles.buttonText}>Bitácora de Entregas</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       <NavBar />
@@ -52,47 +67,50 @@ export default function MainMenu({ navigation }) {
 
 const styles = StyleSheet.create({
   safeArea: {
-    backgroundColor: "#fff",
+    flex: 1,
+  },
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+  headerContainer: {
+    marginBottom: 30,
+    position: "relative",
+    paddingTop: 10,
+  },
+  backButton: {
+    position: "absolute",
+    left: 0,
+    top: 10,
+    zIndex: 2,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  backIcon: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginRight: 4,
+  },
+  backText: {
+    fontSize: 16,
+    fontWeight: "500",
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
+    width: "100%",
   },
   content: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 20,
-    marginTop: 60, // Ajuste para la barra superior
-    marginBottom: 60, // Ajuste para la NavBar
-  },
-  topBar: {
-    width: "100%",
-    backgroundColor: "#000000",
-    paddingVertical: 15,
-    flexDirection: "row",
-    alignItems: "center",
-    position: "absolute",
-    top: 0,
-    zIndex: 10,
-  },
-  goBackButton: {
-    padding: 10,
-    marginLeft: 10,
-  },
-  topBarTextWrapper: {
-    flexGrow: 1,
-    alignItems: "center",
-  },
-  topBarText: {
-    color: "#fff",
-    fontSize: 20,
-    fontWeight: "bold",
+    marginTop: 10,
   },
   button: {
-    backgroundColor: "#1988c3",
     paddingVertical: 15,
-    paddingHorizontal: 30,
+    paddingHorizontal: 20,
     borderRadius: 8,
     marginVertical: 10,
     width: "100%",
-    maxWidth: 300,
   },
   buttonText: {
     color: "white",

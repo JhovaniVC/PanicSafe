@@ -1,55 +1,87 @@
 import React from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { useTheme } from "../ThemeContext"; // Importa el hook del tema
+import NavBar from "./NavBar";
 
 const NotificacionesScreen = () => {
+  const { colors } = useTheme(); // Obtiene los colores del tema
+
+  // Datos de ejemplo para notificaciones
+  const notifications = [
+    {
+      id: 1,
+      text: "Nuevo mensaje del administrador",
+      time: "Hoy, 10:30 AM",
+      read: false,
+    },
+    {
+      id: 2,
+      text: "Pago de cuota recibido",
+      time: "Ayer, 2:45 PM",
+      read: true,
+    },
+    {
+      id: 3,
+      text: "Recordatorio: Reunión mañana",
+      time: "Lunes, 9:15 AM",
+      read: true,
+    },
+  ];
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Notificaciones</Text>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <Text style={[styles.title, { color: colors.text }]}>Notificaciones</Text>
 
       <ScrollView style={styles.notificationsContainer}>
-        <View style={styles.notificationItem}>
-          <Text style={styles.notificationText}>
-            Nuevo mensaje del administrador
-          </Text>
-          <Text style={styles.notificationTime}>Hoy, 10:30 AM</Text>
-        </View>
-
-        <View style={styles.notificationItem}>
-          <Text style={styles.notificationText}>Pago de cuota recibido</Text>
-          <Text style={styles.notificationTime}>Ayer, 2:45 PM</Text>
-        </View>
-
-        <View style={styles.notificationItem}>
-          <Text style={styles.notificationText}>
-            Recordatorio: Reunión mañana
-          </Text>
-          <Text style={styles.notificationTime}>Lunes, 9:15 AM</Text>
-        </View>
+        {notifications.map((notification) => (
+          <View
+            key={notification.id}
+            style={[
+              styles.notificationItem,
+              {
+                backgroundColor: colors.card,
+                borderLeftWidth: notification.read ? 0 : 3,
+                borderLeftColor: notification.read
+                  ? "transparent"
+                  : colors.primary,
+              },
+            ]}
+          >
+            <Text style={[styles.notificationText, { color: colors.text }]}>
+              {notification.text}
+            </Text>
+            <Text
+              style={[styles.notificationTime, { color: colors.secondaryText }]}
+            >
+              {notification.time}
+            </Text>
+          </View>
+        ))}
       </ScrollView>
+      <NavBar />
     </View>
   );
 };
 
+// Estilos base (sin colores fijos)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
     padding: 20,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
-    color: "#333",
   },
   notificationsContainer: {
     flex: 1,
   },
   notificationItem: {
-    backgroundColor: "white",
     padding: 15,
-    borderRadius: 10,
+    borderRadius: 8,
     marginBottom: 10,
+    elevation: 2,
   },
   notificationText: {
     fontSize: 16,
@@ -57,7 +89,6 @@ const styles = StyleSheet.create({
   },
   notificationTime: {
     fontSize: 12,
-    color: "#666",
   },
 });
 

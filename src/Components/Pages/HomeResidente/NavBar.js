@@ -2,19 +2,33 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { useTheme } from "../ThemeContext";
 
 const NavBar = () => {
   const navigation = useNavigation();
+  const { colors } = useTheme();
+
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: colors.card,
+          borderTopColor: colors.border,
+          shadowColor: colors.text,
+        },
+      ]}
+    >
       <TouchableOpacity
         style={styles.tab}
         onPress={() =>
           navigation.navigate("Residente", { screen: "Notificaciones" })
         }
       >
-        <FontAwesome name="bell" size={24} color="#fff" />
-        <Text style={styles.tabText}>Notificaciones</Text>
+        <FontAwesome name="bell" size={24} color={colors.text} />
+        <Text style={[styles.tabText, { color: colors.text }]}>
+          Notificaciones
+        </Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -23,8 +37,10 @@ const NavBar = () => {
           navigation.navigate("Residente", { screen: "Configuracion" })
         }
       >
-        <FontAwesome name="cog" size={24} color="#fff" />
-        <Text style={styles.tabText}>Configuración</Text>
+        <FontAwesome name="cog" size={24} color={colors.text} />
+        <Text style={[styles.tabText, { color: colors.text }]}>
+          Configuración
+        </Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -33,16 +49,16 @@ const NavBar = () => {
           navigation.navigate("Residente", { screen: "HomeResidente" })
         }
       >
-        <FontAwesome name="home" size={24} color="#fff" />
-        <Text style={styles.tabText}>Home</Text>
+        <FontAwesome name="home" size={24} color={colors.text} />
+        <Text style={[styles.tabText, { color: colors.text }]}>Home</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.tab}
         onPress={() => navigation.navigate("Residente", { screen: "User" })}
       >
-        <FontAwesome name="user" size={24} color="#fff" />
-        <Text style={styles.tabText}>User</Text>
+        <FontAwesome name="user" size={24} color={colors.text} />
+        <Text style={[styles.tabText, { color: colors.text }]}>User</Text>
       </TouchableOpacity>
     </View>
   );
@@ -54,9 +70,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     height: 60,
-    backgroundColor: "#000",
     borderTopWidth: 1,
-    borderTopColor: "#ddd",
     position: "absolute",
     bottom: 10,
     left: 10,
@@ -64,7 +78,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     paddingHorizontal: 10,
     elevation: 5,
-    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 5,
@@ -76,7 +89,6 @@ const styles = StyleSheet.create({
   },
   tabText: {
     fontSize: 12,
-    color: "#fff",
     marginTop: 4,
   },
 });

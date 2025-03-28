@@ -11,12 +11,19 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import NavBar from "./NavBar";
 import HeaderHome from "./HeaderHome";
 import { useNavigation } from "@react-navigation/native";
+import { useTheme } from "../ThemeContext"; // Importa el hook del tema
 
 export default function HomePageResidente() {
   const navigation = useNavigation();
+  const { colors, darkMode } = useTheme(); // Obtiene los colores y estado del tema
+
   return (
-    <View style={styles.container}>
-      <StatusBar style="light" backgroundColor="#3396FE" translucent={true} />
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <StatusBar
+        style={darkMode ? "light" : "dark"}
+        backgroundColor={colors.header}
+        translucent={true}
+      />
       <HeaderHome />
 
       <View style={styles.contentWrapper}>
@@ -25,12 +32,15 @@ export default function HomePageResidente() {
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.centeredContainer}>
-            {/* Botón SOS con icono de exclamación */}
+            {/* Botón SOS (mantiene su color rojo distintivo) */}
             <Pressable
-              onPress={() => navigation.navigate("Panico")} // ¡Navega a la pantalla!
+              onPress={() => navigation.navigate("Panico")}
               style={({ pressed }) => [
                 styles.sosButton,
-                { transform: [{ scale: pressed ? 0.98 : 1 }] },
+                {
+                  transform: [{ scale: pressed ? 0.98 : 1 }],
+                  backgroundColor: colors.danger || "#FF3B30", // Usa el color danger del tema o el rojo por defecto
+                },
               ]}
             >
               <View style={styles.sosContent}>
@@ -47,7 +57,7 @@ export default function HomePageResidente() {
             {/* Botones de opciones */}
             <View style={styles.optionsContainer}>
               <TouchableOpacity
-                style={styles.largeButton}
+                style={[styles.largeButton, { backgroundColor: colors.card }]}
                 onPress={() =>
                   navigation.navigate("Residente", {
                     screen: "Bitacora",
@@ -57,36 +67,42 @@ export default function HomePageResidente() {
                 <Icon
                   name="book"
                   size={26}
-                  color="#3396FE"
+                  color={colors.primary}
                   style={styles.buttonIcon}
                 />
-                <Text style={styles.buttonText}>Bitacoras</Text>
+                <Text style={[styles.buttonText, { color: colors.text }]}>
+                  Bitácoras
+                </Text>
               </TouchableOpacity>
 
               <TouchableOpacity
-                style={styles.largeButton}
+                style={[styles.largeButton, { backgroundColor: colors.card }]}
                 onPress={() => navigation.navigate("Reportes")}
               >
                 <Icon
                   name="exclamation-triangle"
                   size={26}
-                  color="#3396FE"
+                  color={colors.primary}
                   style={styles.buttonIcon}
                 />
-                <Text style={styles.buttonText}>REPORTES DE SEGURIDAD</Text>
+                <Text style={[styles.buttonText, { color: colors.text }]}>
+                  REPORTES DE SEGURIDAD
+                </Text>
               </TouchableOpacity>
 
               <TouchableOpacity
-                style={styles.largeButton}
+                style={[styles.largeButton, { backgroundColor: colors.card }]}
                 onPress={() => navigation.navigate("QrScreen")}
               >
                 <Icon
                   name="qrcode"
                   size={26}
-                  color="#3396FE"
+                  color={colors.primary}
                   style={styles.buttonIcon}
                 />
-                <Text style={styles.buttonText}>GENERAR CÓDIGO QR</Text>
+                <Text style={[styles.buttonText, { color: colors.text }]}>
+                  GENERAR CÓDIGO QR
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -98,10 +114,10 @@ export default function HomePageResidente() {
   );
 }
 
+// Estilos base (sin colores fijos)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5F5F5",
   },
   contentWrapper: {
     flex: 1,
@@ -116,9 +132,8 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   sosButton: {
-    backgroundColor: "#FF3B30", // Rojo intenso
     width: "100%",
-    height: 110, // Aumentado para acomodar el icono
+    height: 110,
     borderRadius: 12,
     marginBottom: 25,
     alignItems: "center",
@@ -147,7 +162,6 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   largeButton: {
-    backgroundColor: "#FFFFFF",
     width: "100%",
     height: 90,
     flexDirection: "row",
@@ -166,7 +180,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 18,
-    color: "#333",
     fontWeight: "600",
     flex: 1,
   },
